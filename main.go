@@ -23,7 +23,6 @@ import (
 	flag "github.com/ogier/pflag"
 	"github.com/pkg/profile"
 	gi "github.com/sabhiram/go-gitignore"
-	_ "protos" // Link in the compiled protos, they are faster than Dynamic protos
 )
 
 const PROTO_ROOT string = "PBCAT_PROTO_ROOT"

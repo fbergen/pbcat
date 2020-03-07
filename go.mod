@@ -1,8 +1,6 @@
 module .
 
-go 1.13
-
-replace protos v0.0.0 => ../../protos
+go 1.14
 
 require (
 	github.com/jhump/protoreflect v1.5.0 // indirect
@@ -12,5 +10,4 @@ require (
 	github.com/sabhiram/go-gitignore v0.0.0-20180611051255-d3107576ba94 // indirect
 	github.com/stretchr/testify v1.4.0 // indirect
 	gopkg.in/oleiade/reflections.v1 v1.0.0 // indirect
-	protos v0.0.0
 )
