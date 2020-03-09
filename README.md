@@ -27,7 +27,7 @@ Instead of specifying directory of proto definitions all the time, you can also 
 export PBCAT_PROTO_ROOT="/PATH/TO/PROTO/DIR"
 ```
 
-## Specifying the message type
+## Command line flags
 
 Specify the mesage type `--msg=MessageType`
 Pbcat is trying to infer the type of the binary message by looking at the available types from the proto definitions, 
