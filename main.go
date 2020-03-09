@@ -85,7 +85,8 @@ func createMessageRegistry(protoRoot string) (*msgregistry.MessageRegistry, []st
 		var err error
 		ignore, err = gi.CompileIgnoreFile(path.Join(protoRoot, ".gitignore"))
 		if err != nil {
-			log.Fatal(err)
+			log.Error(err)
+			log.Error("Proceeding without .gitignore")
 		}
 	}
 
