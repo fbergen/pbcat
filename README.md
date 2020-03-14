@@ -1,6 +1,6 @@
 # pbcat
 
-Cat utility for length encoded binary proto files, prints the results in json lines format.
+Utility for deserializing length encoded binary proto files to JSON lines
 
 
 ## Installation
@@ -16,7 +16,7 @@ $ ls protos/
 ls data/
 > data.pb 
 
-$ $GOPATH/bin/pbcat -p protos data/data.pb
+$ $GOPATH/bin/pbcat -p protos data/data.pb | jq '.'
 ```
 
 ## ENV variables
