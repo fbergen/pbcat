@@ -1,6 +1,6 @@
 # pbcat
 
-Cat utility for length encoded binary proto files, prints the results in json lines format.
+Utility for deserializing length encoded binary proto files to JSON lines
 
 
 ## Installation
@@ -16,7 +16,7 @@ $ ls protos/
 ls data/
 > data.pb 
 
-$ $GOPATH/bin/pbcat -p protos data/data.pb
+$ $GOPATH/bin/pbcat -p protos data/data.pb | jq '.'
 ```
 
 ## ENV variables
@@ -27,7 +27,7 @@ Instead of specifying directory of proto definitions all the time, you can also 
 export PBCAT_PROTO_ROOT="/PATH/TO/PROTO/DIR"
 ```
 
-## Specifying the message type
+## Command line flags
 
 Specify the mesage type `--msg=MessageType`
 Pbcat is trying to infer the type of the binary message by looking at the available types from the proto definitions, 
