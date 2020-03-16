@@ -10,13 +10,11 @@ go get github.com/fbergen/pbcat
 
 ## Basic Usage
 
-```
-$ ls protos/
-> example.proto
-ls data/
-> data.pb 
+Tool is similar to `protoc --decode MyMessage my.proto < proto.bin` but it outputs JSON lines so you can consume the output in e.g `jq` later
 
-$ $GOPATH/bin/pbcat -p protos data/data.pb | jq '.'
+```
+$ pbcat -p ../proto_dir/ --msg=MyMessage FILE.bin | jq '.'
+$ pbcat -p ../proto_dir/ --msg=MyMessage < FILE.bin | jq '.'
 ```
 
 ## ENV variables
