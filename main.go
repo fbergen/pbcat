@@ -124,6 +124,7 @@ func main() {
 		fmt.Fprintln(os.Stderr, "Options:")
 		flag.PrintDefaults()
 	}
+	log.SetFlags(log.LstdFlags | log.Lshortfile)
 
 	var file *os.File
 	l := flag.NArg()
@@ -166,6 +167,7 @@ func main() {
 	}
 
 	readConcurrency := 30
+	serializeConcurrency := 16
 	registry, registryUrls := createMessageRegistry(*protoRoot)
 
 	var msgURL string
@@ -212,7 +214,7 @@ func main() {
 		return
 	}
 
-	serialized := jsonpSerialize(matched, *useJsonpb)
+	serialized := jsonpSerialize(matched, serializeConcurrency, *useJsonpb)
 
 	for b := range serialized {
 		out.Write(b)
@@ -224,11 +226,10 @@ func main() {
 	}
 }
 
-func jsonpSerialize(msgs chan proto.Message, useJsonpb bool) chan []byte {
+func jsonpSerialize(msgs chan proto.Message, concurrency int, useJsonpb bool) chan []byte {
 	out := make(chan []byte)
 
 	var wg sync.WaitGroup
-	concurrency := 16
 	wg.Add(concurrency)
 
 	for i := 0; i < concurrency; i++ {
@@ -317,6 +318,9 @@ func readMessageLocations(file os.File, maxMessages int) <-chan messageLocation 
 
 			nb, numRead := proto.DecodeVarint(varIntBuf)
 
+			if numRead == 0 {
+				log.Fatal(numRead)
+			}
 			location += numRead
 			out <- messageLocation{location, nb}
 			location += int(nb)
@@ -426,7 +430,9 @@ func readMessages(file os.File, msgname string, msgreg *msgregistry.MessageRegis
 					log.Fatal(err)
 				}
 
-				proto.Unmarshal(msgBuf[:msgLocation.msgSize], msg)
+				if err := proto.Unmarshal(msgBuf[:msgLocation.msgSize], msg); err != nil {
+					log.Fatal(err)
+				}
 				out <- msg
 			}
 
