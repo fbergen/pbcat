@@ -3,7 +3,7 @@ module github.com/fbergen/pbcat
 go 1.17
 
 require (
-	github.com/golang/protobuf v1.5.0
+	github.com/golang/protobuf v1.5.2
 	github.com/jhump/protoreflect v1.10.1
 	github.com/ogier/pflag v0.0.1
 	github.com/pkg/profile v1.6.0
