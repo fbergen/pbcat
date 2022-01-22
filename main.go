@@ -35,7 +35,7 @@ var maxMatches = flag.Int("m", 0, "Maximum number of matches to output")
 var protoRoot = flag.StringP("proto-root", "p", os.Getenv(PROTO_ROOT), "Path to the root of the protos to be added")
 var protoMessage = flag.String("msg", "", "Fully qualified name of the proto")
 var skipParseIgnore = flag.Bool("skip-ignore", false, "Skip .gitignore files")
-var useJsonpb = flag.Bool("jsonpb", false, "Whether to use jsonpb instead of encoding/json, (more correct resulsts but 7x slower for structs)")
+var useJsonpb = flag.Bool("jsonpb", false, "Whether to use jsonpb instead of encoding/json, (more correct results but 7x slower for structs)")
 
 func listExtension(files *[]string, extension string, ignore *gi.GitIgnore) filepath.WalkFunc {
 	// Add . to extension if missing
