@@ -36,6 +36,7 @@ var protoRoot = flag.StringP("proto-root", "p", os.Getenv(PROTO_ROOT), "Path to 
 var protoMessage = flag.String("msg", "", "Fully qualified name of the proto")
 var skipParseIgnore = flag.Bool("skip-ignore", false, "Skip .gitignore files")
 var useJsonpb = flag.Bool("jsonpb", false, "Whether to use jsonpb instead of encoding/json, (more correct results but 7x slower for structs)")
+var concurrentProcessing = flag.Bool("concurrency", true, "Concurrent reads and writes, NOTE: Improves performance, but results in out of order reads")
 
 func listExtension(files *[]string, extension string, ignore *gi.GitIgnore) filepath.WalkFunc {
 	// Add . to extension if missing
@@ -168,6 +169,10 @@ func main() {
 
 	readConcurrency := 30
 	serializeConcurrency := 16
+	if !*concurrentProcessing {
+		readConcurrency = 1
+		serializeConcurrency = 1
+	}
 	registry, registryUrls := createMessageRegistry(*protoRoot)
 
 	var msgURL string
